@@ -94,13 +94,15 @@
 </head>
 <body>
 <div class="login-form">
-	<form action="/examples/actions/confirmation.php" method="post">
+        <?php
+            echo form_open('user/login');
+        ?>
 		<div class="avatar">
 			<img src="<?php echo base_url(); ?>dist/img/AdminLTELogo.png" alt="Avatar">
 		</div>
 		<h2 class="text-center">Member Login</h2>
 		<div class="form-group">
-			<input type="text" class="form-control" name="username" placeholder="Username" required="required">
+			<input type="email" class="form-control" name="email" placeholder="Email" required="required">
 		</div>
 		<div class="form-group">
 			<input type="password" class="form-control" name="password" placeholder="Password" required="required">
@@ -109,9 +111,11 @@
 			<button type="submit" class="btn btn-primary btn-lg btn-block">Sign in</button>
 		</div>
 		<div class="clearfix">
-			<label class="pull-left checkbox-inline"><input type="checkbox"> Remember me</label>
+			<label class="pull-left checkbox-inline"><input type="checkbox" name="remember"> Remember me</label>
 		</div>
-	</form>
+        <?php
+            echo form_close();
+        ?>
 </div>
 </body>
 </html>
