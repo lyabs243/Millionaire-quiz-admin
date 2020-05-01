@@ -12,7 +12,6 @@ class User extends CI_Controller {
 	public function __construct()
 	{
 		parent::__construct();
-		$this->load->database();
 		$this->load->library('ion_auth');
 	}
 
@@ -27,7 +26,7 @@ class User extends CI_Controller {
 		$this->form_validation->set_error_delimiters('<br /><div class="errorMessage"><span style="font-size: 150%;">&uarr;&nbsp;</span>', '</div>');
 
 		if ($this->form_validation->run() == FALSE){
-			redirect('admin/signin');
+			redirect('admin/');
 		} else {
 			// succès de la validation : récupération des données passées en post
 			$data['email'] = $this->input->post('email');
@@ -37,12 +36,13 @@ class User extends CI_Controller {
 			$remember = isset($data['remember'])? TRUE : FALSE; // remember the user
 			$login = $this->ion_auth->login($data['email'], $data['password'], $remember);
 
-			if($login) {
-				redirect('admin/');
-			} else {
-				redirect('admin/signin');
-			}
+			redirect('admin/');
 		}
 
+	}
+
+	public function logout() {
+		$this->ion_auth->logout();
+		redirect('admin/');
 	}
 }

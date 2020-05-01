@@ -64,7 +64,7 @@
 			<!-- Sidebar user panel (optional) -->
 			<div class="user-panel mt-3 pb-3 mb-3 d-flex">
 				<div class="info">
-					<a href="#" class="d-block">Admin Admin</a>
+					<a href="#" class="d-block"><?php echo $user->first_name . ' ' . $user->last_name; ?></a>
 				</div>
 			</div>
 
@@ -92,7 +92,7 @@
                     </li>
 					<li class="nav-header">USER</li>
                     <li class="nav-item">
-                        <a href="pages/gallery.html" class="nav-link">
+                        <a href="<?php echo base_url(); ?>index.php/user/logout/" class="nav-link">
                             <i class="nav-icon far fa fa-sign-out-alt"></i>
                             <p>
                                 Logout
