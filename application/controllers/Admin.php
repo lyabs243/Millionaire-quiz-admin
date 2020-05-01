@@ -20,4 +20,9 @@ class Admin extends CI_Controller {
 	{
 		$this->load->view('admin_panel');
 	}
+
+	public function signin()
+	{
+		$this->load->view('login_page');
+	}
 }
