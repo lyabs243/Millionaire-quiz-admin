@@ -12,7 +12,7 @@
 			<a href="#" class="nav-link">Questions</a>
 		</li>
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="#" class="nav-link">Users</a>
+			<a href="<?php echo base_url(); ?>index.php/admin/user" class="nav-link">Users</a>
 		</li>
 	</ul>
 </nav>
@@ -50,7 +50,7 @@
 					</a>
 				</li>
 				<li class="nav-item">
-					<a href="pages/gallery.html" class="nav-link">
+					<a href="<?php echo base_url(); ?>index.php/admin/user" class="nav-link">
 						<i class="nav-icon far fa-user"></i>
 						<p>
 							Manage Users

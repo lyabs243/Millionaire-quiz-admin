@@ -12,20 +12,28 @@ class Admin extends CI_Controller {
 	function __construct()
 	{
 		parent::__construct();
-		$this->load->helper('form');
 		$this->load->library('ion_auth');
 		$this->load->helper('url');
+		if (!$this->ion_auth->logged_in()) {
+			redirect('user/signin');
+		}
+	}
+
+	private function getUser()
+	{
+		$user = $this->ion_auth->user()->row();
+		return$user;
 	}
 
 	public function index()
 	{
-		if ($this->ion_auth->logged_in()) {
-			$user = $this->ion_auth->user()->row();
-			$data['user'] = $user;
-			$this->load->view('admin_panel', $data);
-		}
-		else {
-			$this->load->view('login_page');
-		}
+		$data['user'] = $this->getUser();
+		$this->load->view('admin_panel', $data);
+	}
+
+	public function user()
+	{
+		$data['user'] = $this->getUser();
+		$this->load->view('admin_user_page', $data);
 	}
 }
