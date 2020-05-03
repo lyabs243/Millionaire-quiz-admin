@@ -66,7 +66,7 @@ $this->view('admin_head', $data);
                         <td><?php echo $userMngr->first_name; ?></td>
                         <td><?php echo $userMngr->last_name; ?></td>
                         <td>
-                            <a href="#">
+                            <a href="" data-toggle="modal" data-target="#edit-user-<?php echo $userMngr->id; ?>">
                                 <img src="<?php echo base_url(); ?>images/icons/ic_edit.png" width="30" height="30"
                                      alt="edit" title="Edit">
                             </a>
@@ -87,6 +87,67 @@ $this->view('admin_head', $data);
 		</section>
 		<!-- /.content -->
 	</div>
+    <!-- Modal edit users -->
+    <?php
+    foreach ($users as $userMngr) {
+	    ?>
+        <div class="modal fade" id="edit-user-<?php echo $userMngr->id; ?>" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form method="post" action="<?php echo base_url(); ?>index.php/user/update/<?php echo $userMngr->id; ?>">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Edit <?php echo $userMngr->username; ?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="username">Username</label>
+                                <input type="text" name="username" class="form-control" id="username"
+                                       aria-describedby="emailHelp" placeholder="Username" value="<?php echo $userMngr->username; ?>">
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputEmail1">Email address</label>
+                                <input type="email" name="email" class="form-control" id="exampleInputEmail1"
+                                       aria-describedby="emailHelp" placeholder="Enter email" value="<?php echo $userMngr->email; ?>">
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <label for="edit_password">Edit password:</label>
+                                </div>
+                                <div class="col">
+                                    <input type="checkbox" name="edit_password" id="edit_password">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="exampleInputPassword1">Password</label>
+                                <input type="password" name="password" class="form-control" id="exampleInputPassword1"
+                                       placeholder="Password">
+                            </div>
+                            <label>Names</label>
+                            <div class="row">
+                                <div class="col">
+                                    <input name="first_name" type="text" class="form-control" placeholder="First name" value="<?php echo $userMngr->first_name; ?>">
+                                </div>
+                                <div class="col">
+                                    <input name="last_name" type="text" class="form-control" placeholder="Last name" value="<?php echo $userMngr->last_name; ?>">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+	    <?php
+    }
+    ?>
+
 	<!-- Modal add user -->
 	<div class="modal fade" id="add-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		<div class="modal-dialog" role="document">
