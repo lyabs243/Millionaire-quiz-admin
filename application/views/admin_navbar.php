@@ -9,7 +9,7 @@
 			<a href="<?php echo base_url(); ?>index.php/" class="nav-link">Home</a>
 		</li>
 		<li class="nav-item d-none d-sm-inline-block">
-			<a href="#" class="nav-link">Questions</a>
+			<a href="<?php echo base_url(); ?>index.php/admin/question" class="nav-link">Questions</a>
 		</li>
 		<?php
 		if($this->ion_auth->is_admin()) {
@@ -48,7 +48,7 @@
 					 with font-awesome or any other icon font library -->
 
 				<li class="nav-item">
-					<a href="pages/gallery.html" class="nav-link">
+					<a href="<?php echo base_url(); ?>index.php/admin/question" class="nav-link">
 						<i class="nav-icon far fa-question-circle"></i>
 						<p>
 							Manage Questions
