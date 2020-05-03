@@ -43,7 +43,7 @@ $this->view('admin_head', $data);
 		<!-- Main content -->
 		<section class="content">
             <table class="table table-striped">
-                <thead>
+                <thead style="background-color: #343a40; color: white">
                 <tr>
                     <th scope="col">#</th>
                     <th scope="col">Username</th>

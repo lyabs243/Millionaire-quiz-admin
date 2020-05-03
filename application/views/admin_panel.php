@@ -78,7 +78,7 @@
 					<section class="col-lg-7 connectedSortable">
 						<!-- Custom tabs (Charts with tabs)-->
 						<div class="card">
-							<div class="card-header">
+							<div class="card-header" style="background-color: #343a40;color: white">
 								<h3 class="card-title">
 									<i class="fas fa-question-circle mr-1"></i>
 									Questions Overview
@@ -112,7 +112,7 @@
 
 						<!-- Map card -->
                         <div class="card">
-                            <div class="card-header">
+                            <div class="card-header" style="background-color: #343a40;color: white">
                                 <h3 class="card-title">
                                     <i class="fas fa-user mr-1"></i>
                                     Admin Users
