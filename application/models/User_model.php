@@ -29,6 +29,11 @@ class User_model extends CI_Model
 		return $this->ion_auth->register('hello', $password, $email, $additional_data, $group);
 	}
 
+	public function delete_user($id)
+	{
+		return $this->ion_auth->delete_user($id);
+	}
+
 	public function update_user($id, $user)
 	{
 		$data = array(

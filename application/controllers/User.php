@@ -54,6 +54,25 @@ class User extends CI_Controller {
 
 	}
 
+	public function delete($id)
+	{
+		$_SESSION['success'] = false;
+		if ($this->ion_auth->is_admin()) {
+			$result = $this->User_model->delete_user($id);
+			if ($result) {
+				$_SESSION['success'] = true;
+				$_SESSION['message'] = 'The user has been successfully deleted!';
+			} else {
+				$_SESSION['message'] = 'Error when deleting user.';
+			}
+		}
+		else
+		{
+			$_SESSION['message'] = 'Only administrators have the right to delete user.';
+		}
+		redirect('admin/user');
+	}
+
 	public function add()
 	{
 		if ($this->ion_auth->is_admin()) {

@@ -72,7 +72,7 @@ $this->view('admin_head', $data);
                             </a>
                         </td>
                         <td>
-                            <a href="#">
+                            <a href="" data-toggle="modal" data-target="#delete-user-<?php echo $userMngr->id; ?>">
                                 <img src="<?php echo base_url(); ?>images/icons/ic_delete.png" width="30" height="30"
                                      alt="delete" title="Delete">
                             </a>
@@ -87,7 +87,7 @@ $this->view('admin_head', $data);
 		</section>
 		<!-- /.content -->
 	</div>
-    <!-- Modal edit users -->
+    <!-- Modal edit/delete users -->
     <?php
     foreach ($users as $userMngr) {
 	    ?>
@@ -139,6 +139,30 @@ $this->view('admin_head', $data);
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                             <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Modal delete -->
+        <div class="modal fade" id="delete-user-<?php echo $userMngr->id; ?>" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form method="post" action="<?php echo base_url(); ?>index.php/user/delete/<?php echo $userMngr->id; ?>">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete  <?php echo $userMngr->username; ?></h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <label>Do you want to delete  <?php echo $userMngr->first_name . ' ' . $userMngr->last_name; ?> ?</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Delete</button>
                         </div>
                     </div>
                 </form>
