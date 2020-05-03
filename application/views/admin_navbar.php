@@ -11,9 +11,15 @@
 		<li class="nav-item d-none d-sm-inline-block">
 			<a href="#" class="nav-link">Questions</a>
 		</li>
-		<li class="nav-item d-none d-sm-inline-block">
-			<a href="<?php echo base_url(); ?>index.php/admin/user" class="nav-link">Users</a>
-		</li>
+		<?php
+		if($this->ion_auth->is_admin()) {
+			?>
+            <li class="nav-item d-none d-sm-inline-block">
+                <a href="<?php echo base_url(); ?>index.php/admin/user" class="nav-link">Users</a>
+            </li>
+			<?php
+		}
+        ?>
 	</ul>
 </nav>
 <!-- /.navbar -->
@@ -49,14 +55,20 @@
 						</p>
 					</a>
 				</li>
-				<li class="nav-item">
-					<a href="<?php echo base_url(); ?>index.php/admin/user" class="nav-link">
-						<i class="nav-icon far fa-user"></i>
-						<p>
-							Manage Users
-						</p>
-					</a>
-				</li>
+                <?php
+                if($this->ion_auth->is_admin()) {
+	                ?>
+                    <li class="nav-item">
+                        <a href="<?php echo base_url(); ?>index.php/admin/user" class="nav-link">
+                            <i class="nav-icon far fa-user"></i>
+                            <p>
+                                Manage Users
+                            </p>
+                        </a>
+                    </li>
+	                <?php
+                }
+                ?>
 				<li class="nav-header">USER</li>
 				<li class="nav-item">
 					<a href="<?php echo base_url(); ?>index.php/user/logout/" class="nav-link">

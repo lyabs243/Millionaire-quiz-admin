@@ -20,7 +20,24 @@ $this->view('admin_head', $data);
 					</div><!-- /.col -->
 				</div><!-- /.row -->
 			</div><!-- /.container-fluid -->
+            <?php
+            if(isset($success)) {
+	            ?>
+                <div class="card-tools">
+                    <div class="alert <?php if($success) echo 'alert-success'; else echo 'alert-danger';?>" role="alert">
+                        <?php echo $message; ?>
+                    </div>
+                </div>
+	            <?php
+            }
+            ?>
+			<div class="card-tools">
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-user">
+					Add new user
+				</button>
+			</div>
 		</div>
+
 		<!-- /.content-header -->
 
 		<!-- Main content -->
@@ -28,6 +45,66 @@ $this->view('admin_head', $data);
 
 		</section>
 		<!-- /.content -->
+	</div>
+	<!-- Modal add user -->
+	<div class="modal fade" id="add-user" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<form method="post" action="<?php echo base_url(); ?>index.php/user/add">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Add user</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+						<div class="form-group">
+							<label for="username">Username</label>
+							<input type="text" name="username" class="form-control" id="username" aria-describedby="emailHelp" placeholder="Username">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputEmail1">Email address</label>
+							<input type="email" name="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp" placeholder="Enter email">
+						</div>
+						<div class="form-group">
+							<label for="exampleInputPassword1">Password</label>
+							<input type="password" name="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+						</div>
+						<label>Names</label>
+						<div class="row">
+							<div class="col">
+								<input name="first_name" type="text" class="form-control" placeholder="First name">
+							</div>
+							<div class="col">
+								<input name="last_name" type="text" class="form-control" placeholder="Last name">
+							</div>
+						</div>
+						<div class="form-group">
+							<label>User group</label>
+							<div class="col-sm-10">
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="user_group" id="gridRadios1" value="2" checked>
+									<label class="form-check-label" for="gridRadios1">
+										Member
+									</label>
+								</div>
+								<div class="form-check">
+									<input class="form-check-input" type="radio" name="user_group" id="gridRadios2" value="1">
+									<label class="form-check-label" for="gridRadios2">
+										Admin
+									</label>
+								</div>
+							</div>
+						</div>
+
+				</div>
+				<div class="modal-footer">
+					<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+					<button type="submit" class="btn btn-primary">Save</button>
+				</div>
+			</div>
+			</form>
+		</div>
 	</div>
 	<?php $this->view('admin_footer'); ?>
 </div>
