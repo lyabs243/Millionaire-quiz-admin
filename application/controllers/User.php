@@ -18,7 +18,12 @@ class User extends CI_Controller {
 
 	public function signin()
 	{
-		$this->load->view('login_page');
+		if ($this->ion_auth->logged_in()) {
+			redirect('admin/');
+		}
+		else {
+			$this->load->view('login_page');
+		}
 	}
 
 	public function login() {
