@@ -42,7 +42,48 @@ $this->view('admin_head', $data);
 
 		<!-- Main content -->
 		<section class="content">
-
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Username</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                $index = 1;
+                foreach ($users as $userMngr) {
+	                ?>
+                    <tr>
+                        <th scope="row"><?php echo $index; ?></th>
+                        <td><?php echo $userMngr->username; ?></td>
+                        <td><?php echo $userMngr->email; ?></td>
+                        <td><?php echo $userMngr->first_name; ?></td>
+                        <td><?php echo $userMngr->last_name; ?></td>
+                        <td>
+                            <a href="#">
+                                <img src="<?php echo base_url(); ?>images/icons/ic_edit.png" width="30" height="30"
+                                     alt="edit" title="Edit">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="#">
+                                <img src="<?php echo base_url(); ?>images/icons/ic_delete.png" width="30" height="30"
+                                     alt="delete" title="Delete">
+                            </a>
+                        </td>
+                    </tr>
+	                <?php
+                    $index++;
+                }
+                ?>
+                </tbody>
+            </table>
 		</section>
 		<!-- /.content -->
 	</div>

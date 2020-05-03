@@ -28,4 +28,9 @@ class User_model extends CI_Model
 
 		return $this->ion_auth->register('hello', $password, $email, $additional_data, $group);
 	}
+
+	public function get_users()
+	{
+		return $this->ion_auth->users()->result();
+	}
 }

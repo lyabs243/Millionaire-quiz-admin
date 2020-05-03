@@ -14,6 +14,7 @@ class Admin extends CI_Controller {
 		parent::__construct();
 		$this->load->library('ion_auth');
 		$this->load->helper('url');
+		$this->load->model('User_model');
 		if (!$this->ion_auth->logged_in()) {
 			redirect('user/signin');
 		}
@@ -42,6 +43,7 @@ class Admin extends CI_Controller {
 			unset($_SESSION['message']);
 		}
 		$data['user'] = $this->getUser();
+		$data['users'] = $this->User_model->get_users();
 		$this->load->view('admin_user_page', $data);
 	}
 }
