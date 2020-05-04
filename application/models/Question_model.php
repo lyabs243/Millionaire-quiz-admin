@@ -39,6 +39,31 @@ class Question_model extends CI_Model
 		$id = $this->db->insert_id();
 	}
 
+	public function update_question($id, $question)
+	{
+		$data = array(
+			'description' => $question['description'],
+			'level' => $question['level'],
+		);
+		$this->db->where('id', $id);
+		$this->db->update('questions', $data);
+
+		//update answers of question
+		$answers = $question['answers'];
+		foreach ($answers as $answer)
+		{
+			$this->update_answer($answer);
+		}
+	}
+
+	public function update_answer($answer)
+	{
+		$data['description'] = $answer['description'];
+		$data['is_valid_answer'] = $answer['is_valid_answer'];
+		$this->db->where('id', $answer['id']);
+		return $this->db->update('answer', $data);
+	}
+
 	/**
 	 * Get specific number of questions in a specific level
 	 * for level=-1 it gets questions in any level

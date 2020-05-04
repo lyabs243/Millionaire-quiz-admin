@@ -67,4 +67,58 @@ class Question extends CI_Controller
 		}
 		redirect('admin/question');
 	}
+
+	public function update($id)
+	{
+		$this->load->library('form_validation');
+
+		$user = $this->ion_auth->user()->row();
+
+		// définition des règles de validation
+		$this->form_validation->set_rules('question', '« Question »', 'required');
+		$this->form_validation->set_rules('level', '« Level »', 'required');
+		$this->form_validation->set_rules('answer-1', '« First answe »', 'required');
+		$this->form_validation->set_rules('answer-2', '« Second answer »', 'required');
+		$this->form_validation->set_rules('answer-3', '« Third answer »', 'required');
+		$this->form_validation->set_rules('answer-4', '« Fourth answer »', 'required');
+		$this->form_validation->set_rules('correct-answer', '« Correct answer »', 'required');
+
+		$_SESSION['success'] = true;
+		if ($this->form_validation->run() == FALSE) {
+			$_SESSION['success'] = false;
+		} else {
+			$question['description'] = $this->input->post('question');
+			$question['level'] = $this->input->post('level');
+
+			$validAnswer = $this->input->post('correct-answer');
+
+			$answer1['description'] = $this->input->post('answer-1');
+			$answer1['is_valid_answer'] = ($validAnswer == 1);
+			$answer1['id'] = $this->input->post('id-1');
+			$question['answers'][] = $answer1;
+
+			$answer2['description'] = $this->input->post('answer-2');
+			$answer2['is_valid_answer'] = ($validAnswer == 2);
+			$answer2['id'] = $this->input->post('id-2');
+			$question['answers'][] = $answer2;
+
+			$answer3['description'] = $this->input->post('answer-3');
+			$answer3['is_valid_answer'] = ($validAnswer == 3);
+			$answer3['id'] = $this->input->post('id-3');
+			$question['answers'][] = $answer3;
+
+			$answer4['description'] = $this->input->post('answer-4');
+			$answer4['is_valid_answer'] = ($validAnswer == 4);
+			$answer4['id'] = $this->input->post('id-4');
+			$question['answers'][] = $answer4;
+
+			$this->Question_model->update_question($id, $question);
+		}
+		if ($_SESSION['success']) {
+			$_SESSION['message'] = 'The question has been successfully updated!';
+		} else {
+			$_SESSION['message'] = 'Error when updating question, please check your data.';
+		}
+		redirect('admin/question');
+	}
 }

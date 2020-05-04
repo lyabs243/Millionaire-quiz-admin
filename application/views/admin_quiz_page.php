@@ -178,6 +178,73 @@ $this->view('admin_head', $data);
 		</section>
 		<!-- /.content -->
 	</div>
+    <!-- modal update/delete question -->
+    <?php
+    foreach ($questions as $question) {
+	    $answersQst = $this->Question_model->get_answers($question->id);
+	    ?>
+        <div class="modal fade" id="edit-question-<?php echo $question->id; ?>" role="dialog" >
+            <div class="modal-dialog" role="document">
+                <form method="post" action="<?php echo base_url(); ?>index.php/question/update/<?php echo $question->id; ?>">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Update question</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="form-group">
+                                <label for="question">Question</label>
+                                <textarea maxlength="1000" name="question" class="form-control" id="question" rows="3">
+                                    <?php echo $question->description; ?>
+                                </textarea>
+                            </div>
+                            <div class="form-group">
+                                <label for="level">Question level</label>
+                                <select class="form-control" id="level" name="level">
+                                    <option value="0" <?php if($question->level == 0){ echo 'selected'; } ?>>Easy</option>
+                                    <option value="1" <?php if($question->level == 1){ echo 'selected'; } ?>>Medium</option>
+                                    <option value="2" <?php if($question->level == 2){ echo 'selected'; } ?>>Hard</option>
+                                </select>
+                            </div>
+                            <label>Answers</label>
+                            <?php
+                            $index = 1;
+                            foreach ($answersQst as $answer) {
+	                            ?>
+                                <div class="row">
+                                    <div class="col-8">
+                                        <textarea placeholder="Answer" maxlength="1000" name="answer-<?php echo $index; ?>"
+                                                  class="form-control" id="answer-<?php echo $index; ?>" rows="2">
+                                            <?php echo $answer->description; ?>
+                                        </textarea>
+                                    </div>
+                                    <input type="hidden" name="id-<?php echo $index; ?>" value="<?php echo $answer->id; ?>">
+                                    <div class="col-4">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="radio" name="correct-answer"
+                                                   id="gridRadios1" value="1" <?php if($answer->is_valid_answer){ echo  'checked'; } ?>>
+                                            <label class="form-check-label" for="gridRadios1">Correct answer</label>
+                                        </div>
+                                    </div>
+                                </div><br>
+	                            <?php
+                                $index++;
+                            }
+                            ?>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Update</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+	    <?php
+    }
+    ?>
 	<!-- Modal add question -->
 	<div class="modal fade" id="add-question" role="dialog" >
 		<div class="modal-dialog" role="document">
