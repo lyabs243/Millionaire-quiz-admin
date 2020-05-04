@@ -242,6 +242,30 @@ $this->view('admin_head', $data);
                 </form>
             </div>
         </div>
+
+        <!-- Modal delete -->
+        <div class="modal fade" id="delete-question-<?php echo $question->id; ?>" tabindex="-1" role="dialog"
+             aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <form method="post" action="<?php echo base_url(); ?>index.php/question/delete/<?php echo $question->id; ?>">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Delete question</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <label>Do you want to delete  "<?php echo $question->description; ?>" ?</label>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                            <button type="submit" class="btn btn-primary">Delete</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
 	    <?php
     }
     ?>

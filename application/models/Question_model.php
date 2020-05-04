@@ -64,6 +64,22 @@ class Question_model extends CI_Model
 		return $this->db->update('answer', $data);
 	}
 
+	public function delete_question($id)
+	{
+		$this->db->where('id', $id);
+		$result = $this->db->delete('questions');
+		$this->delete_answers($id);
+		return $result;
+	}
+
+	//delete all answers of specific questions
+	public function delete_answers($idQuestion)
+	{
+		$this->db->where('id_question', $idQuestion);
+		$result = $this->db->delete('answer');
+		return $result;
+	}
+
 	/**
 	 * Get specific number of questions in a specific level
 	 * for level=-1 it gets questions in any level
