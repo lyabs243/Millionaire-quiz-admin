@@ -196,8 +196,7 @@ $this->view('admin_head', $data);
                         <div class="modal-body">
                             <div class="form-group">
                                 <label for="question">Question</label>
-                                <textarea maxlength="1000" name="question" class="form-control" id="question" rows="3">
-                                    <?php echo $question->description; ?>
+                                <textarea maxlength="1000" name="question" class="form-control" id="question" rows="3"><?php echo $question->description; ?>
                                 </textarea>
                             </div>
                             <div class="form-group">
@@ -216,9 +215,7 @@ $this->view('admin_head', $data);
                                 <div class="row">
                                     <div class="col-8">
                                         <textarea placeholder="Answer" maxlength="1000" name="answer-<?php echo $index; ?>"
-                                                  class="form-control" id="answer-<?php echo $index; ?>" rows="2">
-                                            <?php echo $answer->description; ?>
-                                        </textarea>
+                                                  class="form-control" id="answer-<?php echo $index; ?>" rows="2"><?php echo $answer->description; ?></textarea>
                                     </div>
                                     <input type="hidden" name="id-<?php echo $index; ?>" value="<?php echo $answer->id; ?>">
                                     <div class="col-4">
