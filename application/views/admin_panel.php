@@ -32,7 +32,7 @@
 						<!-- small box -->
 						<div class="small-box bg-info">
 							<div class="inner">
-								<h3>150</h3>
+								<h3><?php echo $total_easy_question; ?></h3>
 
 								<p>Easy questions</p>
 							</div>
@@ -46,7 +46,7 @@
                         <!-- small box -->
                         <div class="small-box bg-warning">
                             <div class="inner">
-                                <h3>250</h3>
+                                <h3><?php echo $total_medium_question; ?></h3>
 
                                 <p>Medium questions</p>
                             </div>
@@ -60,7 +60,7 @@
                         <!-- small box -->
                         <div class="small-box bg-danger">
                             <div class="inner">
-                                <h3>150</h3>
+                                <h3><?php echo $total_hard_question; ?></h3>
 
                                 <p>Difficult questions</p>
                             </div>
@@ -86,18 +86,22 @@
 								<div class="card-tools">
 									<ul class="nav nav-pills ml-auto">
 										<li class="nav-item">
-											<a class="nav-link active" href="#revenue-chart" data-toggle="tab">Manage</a>
+											<a class="nav-link active" href="<?php echo base_url() ?>index.php/admin/question">Manage</a>
 										</li>
 									</ul>
 								</div>
 							</div><!-- /.card-header -->
 							<div class="card-body">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Qui est le meilleur buteur du championnat de football francais?</li>
-                                    <li class="list-group-item">Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Morbi leo risus Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Porta ac consectetur ac Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in</li>
-                                    <li class="list-group-item">Vestibulum at eros Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in Dapibus ac facilisis in</li>
+                                    <?php
+                                    foreach ($questions as $question) {
+	                                    ?>
+                                        <li class="list-group-item">
+                                            <?php echo $question->description; ?>
+                                        </li>
+	                                    <?php
+                                    }
+                                    ?>
                                 </ul>
 							</div><!-- /.card-body -->
 						</div>
@@ -120,17 +124,24 @@
                                 <div class="card-tools">
                                     <ul class="nav nav-pills ml-auto">
                                         <li class="nav-item">
-                                            <a class="nav-link active" href="#revenue-chart" data-toggle="tab">Manage</a>
+                                            <a class="nav-link active" href="<?php echo base_url() ?>index.php/admin/user">Manage</a>
                                         </li>
                                     </ul>
                                 </div>
                             </div><!-- /.card-header -->
                             <div class="card-body">
                                 <ul class="list-group list-group-flush">
-                                    <li class="list-group-item">Admin admin</li>
-                                    <li class="list-group-item">John Doe</li>
-                                    <li class="list-group-item">Jane Dow</li>
-                                    <li class="list-group-item">Loic Yabili</li>
+                                    <?php
+                                    foreach ($users as $user) {
+	                                    ?>
+                                        <li class="list-group-item">
+                                            <?php echo $user->first_name . ' ' . $user->last_name .
+                                            '( @' . $user->username . ' )';
+                                            ?>
+                                        </li>
+	                                    <?php
+                                    }
+                                    ?>
                                 </ul>
                             </div><!-- /.card-body -->
                         </div>

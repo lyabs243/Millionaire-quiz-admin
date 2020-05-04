@@ -38,4 +38,43 @@ class Question_model extends CI_Model
 		$this->db->insert('answer', $data);
 		$id = $this->db->insert_id();
 	}
+
+	/**
+	 * Get specific number of questions in a specific level
+	 * for level=-1 it gets questions in any level
+	 * @param $start
+	 * @param $length
+	 * @param int $level
+	 */
+	function get_questions($start, $length, $level=-1)
+	{
+		$sql = 'SELECT * FROM questions ';
+		$args = [];
+		if($level > -1)
+		{
+			$sql .= ' $level = ? ';
+			$args[] = $level;
+		}
+		$sql .= ' LIMIT ?, ? ';
+		$args[] = $start;
+		$args[] = $length;
+		$query = $this->db->query($sql, $args);
+		return $query->result();
+	}
+
+	function  total_questions($level)
+	{
+		$total = 0;
+		$query = $this->db->query('
+		SELECT COUNT(*) as total
+		 FROM questions 
+		 WHERE level = ?'
+			,array($level));
+		$results = $query->result();
+		foreach ($results as $result)
+		{
+			$total = $result->total;
+		}
+		return $total;
+	}
 }
