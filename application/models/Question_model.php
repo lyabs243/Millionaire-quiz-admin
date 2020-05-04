@@ -46,30 +46,66 @@ class Question_model extends CI_Model
 	 * @param $length
 	 * @param int $level
 	 */
-	function get_questions($start, $length, $level=-1)
+	function get_questions($start, $length, $level=-1, $search='')
 	{
-		$sql = 'SELECT * FROM questions ';
+		$sql = 'SELECT q.id, q.description, q.level, q.register_date, u.first_name, u.last_name 
+		FROM questions q 
+		JOIN users u 
+		ON q.add_by =u.id ';
 		$args = [];
-		if($level > -1)
+		if(!empty($search))
 		{
-			$sql .= ' $level = ? ';
+			$sql .= ' WHERE LOWER(description) LIKE ? ';
+			$args[] = '%' . strtolower($search) . '%';
+		}
+		else if($level > -1)
+		{
+			$sql .= ' WHERE level = ? ';
 			$args[] = $level;
 		}
-		$sql .= ' LIMIT ?, ? ';
-		$args[] = $start;
-		$args[] = $length;
+		$sql .= ' ORDER by register_date DESC ';
+
+		//when searching data, there is no limit on result
+		if(empty($search)) {
+			$sql .= ' LIMIT ?, ? ';
+			$args[] = $start;
+			$args[] = $length;
+		}
+
 		$query = $this->db->query($sql, $args);
 		return $query->result();
 	}
 
-	function  total_questions($level)
+	function get_answers($idQuestion)
+	{
+		$sql = 'SELECT * 
+		FROM answer a 
+		WHERE id_question = ? ';
+		$args = array($idQuestion);
+		$query = $this->db->query($sql, $args);
+		return $query->result();
+	}
+
+	function  total_questions($level=-1, $search='')
 	{
 		$total = 0;
-		$query = $this->db->query('
+		$sql = '
 		SELECT COUNT(*) as total
 		 FROM questions 
-		 WHERE level = ?'
-			,array($level));
+		 ';
+		$args = array();
+		if(!empty($search))
+		{
+			$sql .= ' WHERE LOWER(description) LIKE ? ';
+			$args[] = '%' . strtolower($search) . '%';
+		}
+		else if($level > -1)
+		{
+			$sql .= ' WHERE level = ? ';
+			$args[] = $level;
+		}
+		$query = $this->db->query($sql
+			,$args);
 		$results = $query->result();
 		foreach ($results as $result)
 		{

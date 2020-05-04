@@ -42,6 +42,139 @@ $this->view('admin_head', $data);
 
 		<!-- Main content -->
 		<section class="content">
+            <div class="row">
+                <div class="col-md-4 col-md-offset-3">
+                    <form method="post" action="<?php echo base_url(); ?>index.php/admin/question/">
+                        <div class="form-group has-feedback">
+                            <label for="search" class="sr-only">Search</label>
+                            <input type="text" class="form-control" name="search" id="search" placeholder="search">
+                            <span class="glyphicon glyphicon-search form-control-feedback"></span>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <?php
+            if(isset($search)) {
+	            ?>
+                <div>
+                    <h3>Result for: <?php echo $search; ?></h3>
+                </div>
+	            <?php
+            }
+            ?>
+            <div>
+                <label>Filter by question level:</label>
+                <a href="<?php echo base_url(); ?>index.php/admin/question/" class="btn <?php if($level == -1){ echo 'btn-primary'; } else{ echo 'btn-outline-primary'; } ?> btn-sm">All levels</a>
+                <a href="<?php echo base_url(); ?>index.php/admin/question/1" class="btn <?php if($level == 0){ echo 'btn-primary'; } else{ echo 'btn-outline-primary'; } ?> btn-sm">Easy</a>
+                <a href="<?php echo base_url(); ?>index.php/admin/question/2" class="btn <?php if($level == 1){ echo 'btn-primary'; } else{ echo 'btn-outline-primary'; } ?> btn-sm">Medium</a>
+                <a href="<?php echo base_url(); ?>index.php/admin/question/3" class="btn <?php if($level == 2){ echo 'btn-primary'; } else{ echo 'btn-outline-primary'; } ?> btn-sm">Hard</a>
+            </div>
+            <?php
+            if(isset($pagination))
+            {
+                echo '<div class="col-md-12 row d-flex justify-content-center">' . $pagination . '</div>';
+            }
+            ?><br>
+            <table class="table table-striped">
+                <thead style="background-color: #343a40; color: white">
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Description</th>
+                    <th scope="col">Level</th>
+                    <th scope="col">Add by</th>
+                    <th scope="col">Answers</th>
+                    <th scope="col">Edit</th>
+                    <th scope="col">Delete</th>
+                </tr>
+                </thead>
+                <tbody>
+				<?php
+				$index = $first_index;
+				foreach ($questions as $question) {
+				    $answers = $this->Question_model->get_answers($question->id);
+					?>
+                    <tr>
+                        <th scope="row"><?php echo $index; ?></th>
+                        <td><?php echo $question->description; ?></td>
+                        <td>
+                            <?php
+                            if($question->level == 2)
+                            {
+                                $badge = 'Hard';
+                                $badgeClass = 'badge-danger';
+                            }
+                            else if($question->level == 1)
+                            {
+	                            $badge = 'Medium';
+	                            $badgeClass = 'badge-warning';
+                            }
+                            else
+                            {
+	                            $badge = 'Easy';
+	                            $badgeClass = 'badge-primary';
+                            }
+                            ?>
+                            <h5><span class="badge badge-pill <?php echo $badgeClass; ?>"><?php echo $badge; ?></span></h5>
+                        </td>
+                        <td><?php echo $question->first_name . ' ' . $question->last_name; ?></td>
+                        <td>
+                            <a href="" data-toggle="collapse" data-target="#answers-<?php echo $question->id; ?>">
+                                <img src="<?php echo base_url(); ?>images/icons/ic_eye.png" width="30" height="20"
+                                     alt="delete" title="View answers">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="" data-toggle="modal" data-target="#edit-question-<?php echo $question->id; ?>">
+                                <img src="<?php echo base_url(); ?>images/icons/ic_edit.png" width="30" height="30"
+                                     alt="edit" title="Edit">
+                            </a>
+                        </td>
+                        <td>
+                            <a href="" data-toggle="modal" data-target="#delete-question-<?php echo $question->id; ?>">
+                                <img src="<?php echo base_url(); ?>images/icons/ic_delete.png" width="30" height="30"
+                                     alt="delete" title="Delete">
+                            </a>
+                        </td>
+                    </tr>
+                    <tr class="collapse" id="answers-<?php echo $question->id; ?>">
+                        <td colspan="7">
+                            <table class="col-md-8 offset-2">
+                                <?php
+                                foreach ($answers as $answer) {
+	                                ?>
+                                    <tr>
+                                        <td><?php echo $answer->description; ?></td>
+                                        <td>
+                                            <?php
+                                            $icon = 'ic_false.png';
+                                            if($answer->is_valid_answer)
+                                            {
+                                                $icon = 'ic_correct.png';
+                                            }
+                                            ?>
+                                            <img src="<?php echo base_url(); ?>images/icons/<?php echo $icon; ?>" width="30" height="40"
+                                                 alt="Icon result">
+                                        </td>
+                                    </tr>
+	                                <?php
+                                }
+                                ?>
+                            </table>
+                        </td>
+                    </tr>
+                    <tr></tr>
+					<?php
+					$index++;
+				}
+				?>
+                </tbody>
+            </table><br>
+			<?php
+			if(isset($pagination))
+			{
+				echo '<div class="col-md-12 row d-flex justify-content-center">' . $pagination . '</div>';
+			}
+			?>
 		</section>
 		<!-- /.content -->
 	</div>
