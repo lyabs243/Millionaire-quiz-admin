@@ -154,4 +154,41 @@ class Question_model extends CI_Model
 		}
 		return $total;
 	}
+
+	public function generate_questions($level, $number)
+	{
+		$sql = '
+		SELECT * FROM `questions` 
+		WHERE level = ?
+		ORDER by rand()
+		LIMIT ?		
+		 ';
+		$args = array($level, $number);
+
+		$query = $this->db->query($sql, $args);
+		$results = $query->result_array();
+		$questions = array();
+		//for all questions add answers
+		foreach ($results as $result)
+		{
+			$result['answers'] = $this->generate_answers($result['id']);
+			$questions[] = $result;
+		}
+		return $questions;
+	}
+
+	public function generate_answers($idQuestion)
+	{
+		$sql = '
+		SELECT * FROM `answer`
+		 WHERE id_question = ? 
+		 ORDER by rand() 
+		 LIMIT 4
+		';
+		$args = array($idQuestion);
+
+		$query = $this->db->query($sql, $args);
+		$results = $query->result_array();
+		return $results;
+	}
 }
