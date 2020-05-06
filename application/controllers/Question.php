@@ -58,12 +58,15 @@ class Question extends CI_Controller
 			$answer4['is_valid_answer'] = ($validAnswer == 4);
 			$question['answers'][] = $answer4;
 
-			$this->Question_model->add_question($user->id, $question);
+			$result = $this->Question_model->add_question($user->id, $question);
+			if(!$result) {
+				$_SESSION['success'] = false;
+			}
 		}
 		if ($_SESSION['success']) {
 			$_SESSION['message'] = 'The new question has been successfully added!';
 		} else {
-			$_SESSION['message'] = 'Error when adding a new question, please check your data.';
+			$_SESSION['message'] = 'Error when adding a new question, please check your data maybe the question is already exist.';
 		}
 		redirect('admin/question');
 	}

@@ -15,18 +15,23 @@ class Question_model extends CI_Model
 
 	public function add_question($idUser, $question)
 	{
-		$data['description'] = $question['description'];
-		$data['level'] = $question['level'];
-		$data['add_by'] = $idUser;
-		$this->db->insert('questions', $data);
-		$id = $this->db->insert_id();
-
-		//insert allanswer for that questions
-		$answers = $question['answers'];
-		foreach ($answers as $answer)
+		if(!$this->is_question_exist($question['description']))
 		{
-			$this->add_answer($idUser, $id, $answer);
+			$data['description'] = $question['description'];
+			$data['level'] = $question['level'];
+			$data['add_by'] = $idUser;
+			$this->db->insert('questions', $data);
+			$id = $this->db->insert_id();
+
+			//insert allanswer for that questions
+			$answers = $question['answers'];
+			foreach ($answers as $answer)
+			{
+				$this->add_answer($idUser, $id, $answer);
+			}
+			return true;
 		}
+		return false;
 	}
 
 	public function add_answer($idUser, $idQuestion, $answer)
@@ -115,6 +120,24 @@ class Question_model extends CI_Model
 
 		$query = $this->db->query($sql, $args);
 		return $query->result();
+	}
+
+	function is_question_exist($description)
+	{
+		$sql = 'SELECT * 
+		FROM questions q 
+		WHERE LOWER(description) = ? ';
+
+		$args = array(strtolower($description));
+
+		$query = $this->db->query($sql, $args);
+		$results = $query->result();
+
+		foreach ($results as $result)
+		{
+			return true;
+		}
+		return false;
 	}
 
 	function get_answers($idQuestion)
