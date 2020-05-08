@@ -221,8 +221,8 @@ $this->view('admin_head', $data);
                                     <div class="col-4">
                                         <div class="form-check">
                                             <input class="form-check-input" type="radio" name="correct-answer"
-                                                   id="gridRadios1" value="1" <?php if($answer->is_valid_answer){ echo  'checked'; } ?>>
-                                            <label class="form-check-label" for="gridRadios1">Correct answer</label>
+                                                   id="gridRadios<?php echo $index; ?>" value="<?php echo $index; ?>" <?php if($answer->is_valid_answer){ echo  'checked'; } ?>>
+                                            <label class="form-check-label" for="gridRadios<?php echo $index; ?>">Correct answer</label>
                                         </div>
                                     </div>
                                 </div><br>
