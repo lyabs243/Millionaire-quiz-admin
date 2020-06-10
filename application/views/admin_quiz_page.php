@@ -38,9 +38,9 @@ $this->view('admin_head', $data);
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#import-questions">
 					Import Questions
 				</button>
-				<button type="button" class="btn btn-primary" data-toggle="modal">
+				<a class="btn btn-primary" href="<?php echo base_url(); ?>index.php/question/export">
 					Export Questions
-				</button>
+				</a>
 			</div>
 		</div>
 
@@ -351,7 +351,7 @@ $this->view('admin_head', $data);
 		</div>
 	</div>
 
-	<!-- Modal export questions -->
+	<!-- Modal import questions -->
 	<div class="modal fade" id="import-questions" role="dialog" >
 		<div class="modal-dialog" role="document">
 			<form method="post" action="<?php echo base_url(); ?>index.php/question/import" enctype="multipart/form-data">

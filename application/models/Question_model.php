@@ -111,8 +111,8 @@ class Question_model extends CI_Model
 		}
 		$sql .= ' ORDER by register_date DESC ';
 
-		//when searching data, there is no limit on result
-		if(empty($search)) {
+		//when searching data or get all data, there is no limit on result
+		if(empty($search) && $length > 0) {
 			$sql .= ' LIMIT ?, ? ';
 			$args[] = $start;
 			$args[] = $length;

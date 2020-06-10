@@ -149,6 +149,63 @@ class Question extends CI_Controller
 		redirect('admin/question');
 	}
 
+	public function export()
+	{
+		$questions = $this->Question_model->get_questions(0, -1, -1);
+
+		$list = array ();
+
+		foreach ($questions as $question) {
+			$answers = $this->Question_model->get_answers($question->id);
+
+			$answer1 = '';
+			$answer2 = '';
+			$answer3 = '';
+			$answer4 = '';
+
+			//make valid answer at the first positio
+			foreach ($answers as $answer) {
+				if ($answer->is_valid_answer) {
+					$answer1 = $answer->description;
+				}
+				else {
+					if (empty($answer2)) {
+						$answer2 = $answer->description;
+					}
+					if (empty($answer3)) {
+						$answer3 = $answer->description;
+					}
+					else {
+						$answer4 = $answer->description;
+					}
+				}
+			}
+
+			$field = array($question->description, $question->level, $answer1, $answer2, $answer3, $answer4);
+			$list[] = $field;
+		}
+
+		$fp = fopen('./resource/export-questions.csv', 'w');
+
+		foreach ($list as $fields) {
+			fputcsv($fp, $fields);
+		}
+
+		fclose($fp);
+
+		$this->load->helper('download');
+		$name = 'Millionaire Quiz - questions.csv';
+		$data = file_get_contents('./resource/export-questions.csv');
+		force_download($name, $data);
+
+		if ($_SESSION['success']) {
+			$_SESSION['message'] = 'Questions has been successfully exported!';
+		} else {
+			$_SESSION['message'] = 'Exportation failed.';
+		}
+		redirect('admin/question');
+	}
+
 	public function update($id)
 	{
 		$this->load->library('form_validation');
