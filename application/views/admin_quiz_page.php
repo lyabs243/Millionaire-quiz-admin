@@ -35,6 +35,12 @@ $this->view('admin_head', $data);
 				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#add-question">
 					Add new Question
 				</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#import-questions">
+					Import Questions
+				</button>
+				<button type="button" class="btn btn-primary" data-toggle="modal">
+					Export Questions
+				</button>
 			</div>
 		</div>
 
@@ -341,6 +347,40 @@ $this->view('admin_head', $data);
 					<button type="submit" class="btn btn-primary">Save</button>
 				</div>
 			</div>
+			</form>
+		</div>
+	</div>
+
+	<!-- Modal export questions -->
+	<div class="modal fade" id="import-questions" role="dialog" >
+		<div class="modal-dialog" role="document">
+			<form method="post" action="<?php echo base_url(); ?>index.php/question/import" enctype="multipart/form-data">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="exampleModalLabel">Import questions</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="row">
+							<div class="col-8">
+								<label for="file-separator">Separator</label>
+							</div>
+							<div class="col-4">
+								<input id="file-separator" class="form-control form-control-lg" type="text" name="file-separator" value=",">
+							</div>
+						</div>
+						<div class="form-group">
+							<label for="exampleFormControlFile1">Import CSV file</label>
+							<input type="file" name="questions-file" accept=".csv" class="form-control-file" id="exampleFormControlFile1">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+						<button type="submit" class="btn btn-primary">Import</button>
+					</div>
+				</div>
 			</form>
 		</div>
 	</div>

@@ -71,6 +71,84 @@ class Question extends CI_Controller
 		redirect('admin/question');
 	}
 
+	public function import()
+	{
+		$this->load->library('form_validation');
+
+		$user = $this->ion_auth->user()->row();
+
+		// définition des règles de validation
+		$this->form_validation->set_rules('file-separator', '« File Separator »', 'required');
+
+		//get file to import
+		$filename = 'questions.csv';
+		$config['upload_path']          = './resource/';
+		$config['allowed_types']        = 'csv';
+		$config['max_size']             = 10000;
+
+		$this->load->library('upload', $config);
+
+		if (file_exists($config['upload_path'] . $filename)) {
+			unlink($config['upload_path'] . $filename);
+		}
+		if (!$this->upload->do_upload('questions-file'))
+		{
+			$error = array('error' => $this->upload->display_errors());
+			//print_r($error);
+		}
+		else
+		{
+			$data = array('upload_data' => $this->upload->data());
+			//print_r($data);
+		}
+
+		$_SESSION['success'] = true;
+		if ($this->form_validation->run() == FALSE) {
+			$_SESSION['success'] = false;
+		} else {
+
+			$delimiter = $this->input->post('file-separator');
+			if (($handle = fopen($config['upload_path'] . $filename, "r")) !== FALSE) {
+				while (($data = fgetcsv($handle, 1000, $delimiter)) !== FALSE) {
+					$num = count($data);
+
+					$question = array();
+
+					$question['description'] = $data[0];
+					$question['level'] = $data[1];
+
+					//correct answer
+					$answer1['description'] = $data[2];
+					$answer1['is_valid_answer'] = 1;
+					$question['answers'][] = $answer1;
+
+					$answer2['description'] = $data[3];
+					$answer2['is_valid_answer'] = 0;
+					$question['answers'][] = $answer2;
+
+					$answer3['description'] =$data[4];
+					$answer3['is_valid_answer'] = 0;
+					$question['answers'][] = $answer3;
+
+					$answer4['description'] = $data[5];
+					$answer4['is_valid_answer'] = 0;
+					$question['answers'][] = $answer4;
+					$result = $this->Question_model->add_question($user->id, $question);
+					if(!$result) {
+						$_SESSION['success'] = false;
+					}
+				}
+				fclose($handle);
+			}
+		}
+		if ($_SESSION['success']) {
+			$_SESSION['message'] = 'Questions has been successfully imported!';
+		} else {
+			$_SESSION['message'] = 'It is possible that some questions were not imported, please check your data have the recommended structure.';
+		}
+		redirect('admin/question');
+	}
+
 	public function update($id)
 	{
 		$this->load->library('form_validation');
