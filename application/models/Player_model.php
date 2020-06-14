@@ -22,7 +22,7 @@ class Player_model extends CI_Model
 			$id = $this->db->insert_id();
 			return $id;
 		}
-		return 0;
+		return 1;
 	}
 
 	function is_player_exist($idAccount)
