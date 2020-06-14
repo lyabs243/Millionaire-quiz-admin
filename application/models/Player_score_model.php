@@ -23,7 +23,8 @@ class Player_score_model extends CI_Model
 	}
 
 	//get leadboard: per week or mothly
-	function get_player_score($start, $length, $perWeek=1)
+	//can also get score of specific player
+	function get_player_score($start, $length, $perWeek=1, $idAccount=0)
 	{
 		$sql = 'SELECT ps.id_account, p.full_name, p.url_profil_pic, SUM(ps.score) as total
 				FROM player_score ps
@@ -37,11 +38,22 @@ class Player_score_model extends CI_Model
 			$sql .= 'WHERE MONTH(ps.register_date) = MONTH(CURRENT_DATE())
 				AND YEAR(ps.register_date) = YEAR(CURRENT_DATE()) ';
 		}
+
+		if ($idAccount <> 0) {
+			$sql .= ' AND ps.id_account = ? ';
+		}
+
 		$sql .= ' GROUP BY ps.id_account
 				ORDER BY total DESC
-				LIMIT ?, ?';
+				';
 
-		$args = array($start, $length);
+		if ($idAccount == 0) {
+			$sql .= ' LIMIT ?, ?';
+			$args = array($start, $length);
+		}
+		else {
+			$args = array($idAccount);
+		}
 
 		$query = $this->db->query($sql, $args);
 		return $query->result();

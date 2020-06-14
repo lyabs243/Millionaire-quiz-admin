@@ -34,8 +34,8 @@ class PlayerScore extends Api {
 		echo json_encode($result,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
 	}
 
-	public function get_top_leadboard($start, $length, $perWeek=1) {
-		$playersScore = $this->Player_score_model->get_player_score((int)$start, (int)$length, (int)$perWeek);
+	public function get_top_leadboard($start, $length, $perWeek=1, $idAccount=0) {
+		$playersScore = $this->Player_score_model->get_player_score((int)$start, (int)$length, (int)$perWeek, $idAccount);
 		header( 'Content-Type: application/json; charset=utf-8' );
 		$result['data'] = $playersScore;
 		echo json_encode($result,JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT);
