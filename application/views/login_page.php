@@ -98,7 +98,7 @@
             echo form_open('user/login');
         ?>
 		<div class="avatar">
-			<img src="<?php echo base_url(); ?>dist/img/AdminLTELogo.png" alt="Avatar">
+			<img src="<?php echo base_url(); ?>images/logo.png" alt="Avatar">
 		</div>
 		<h2 class="text-center">Member Login</h2>
 		<div class="form-group">
